@@ -49,15 +49,13 @@ const ResetPassword = () => {
         }),
       });
 
-      const json = (await response.json()) as ApiResponse;
-
       setSubmitting(false);
 
       if (!response.ok) {
-        toast.error(json.error.message);
+        const json = (await response.json()) as ApiResponse;
+        toast.error(t(json?.error?.message || 'Something went wrong'));
         return;
       }
-
       formik.resetForm();
       toast.success(t('password-updated'));
       router.push('/auth/login');
